@@ -1,0 +1,33 @@
+{
+  "name": "abituriyenttest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --watch src src/index.js",
+    "debug": "nodemon --inspect src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikhasanmusaev/abituriyentTest.git"
+  },
+  "author": "ikhasanmusaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikhasanmusaev/abituriyentTest/issues"
+  },
+  "homepage": "https://github.com/ikhasanmusaev/abituriyentTest#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.5",
+    "telegraf": "^3.36.0",
+    "telegraf-flow": "^8.3.0",
+    "telegraf-inline-menu": "^4.0.0",
+    "telegraf-session-local": "^1.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
