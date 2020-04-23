@@ -9,8 +9,9 @@ const Users = mongoose.model('users', new Schema({
 
 const Test = mongoose.model('Test', new Schema({
     testId: {type: String, unique: true, dropDups: true },
-    fileId: {type: String},
-    correctAnswers: {type: String}
+    fileId: {type: String, required: false},
+    correctAnswers: {type: String},
+    value: {type: Number}
 }));
 
 const Result = mongoose.model('Result', new Schema({
