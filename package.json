@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ikhasanmusaev/abituriyentTest#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "moment": "^2.24.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.5",
     "telegraf": "^3.36.0",

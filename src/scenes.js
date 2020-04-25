@@ -3,6 +3,7 @@ models = require('./models/myModel');
 
 const Scene = require('telegraf/scenes/base');
 const Markup = require('telegraf/markup');
+const moment = require('moment');
 
 const testFile = new Scene('testFile');
 const answerText = new Scene('answerText');
@@ -95,8 +96,8 @@ getAnswerID.enter(async (ctx) => {
 getAnswerID.on('text', async (ctx) => {
     const test_id = await models.Test.find({
         testId: ctx.message.text.trim()
-    }, '_id');
-    if (ctx.message.text[0] === '_' && test_id) {
+    }, '_id correctAnswers');
+    if (ctx.message.text[0] === '_' && test_id.length > 0) {
         ctx.session.getAnswerID = ctx.message.text || '';
         await ctx.scene.enter('getAnswer');
     } else {
@@ -135,13 +136,15 @@ verify.enter(async (ctx) => {
         }, 'resultBall test_Id fullName');
         const result = words.checkAnswers(answer, correctAnswer[0].correctAnswers);
         const resultTest = new models.Result({
-            resultBall: result.result.toString(),
+            resultBall: result.result,
             answerUsers: result.array.toString(),
             test_Id: correctAnswer[0]._id,
             userId: user[0]._id
         });
         resultTest.save();
-        await ctx.replyWithMarkdown(`Siz ${result.result} sorawg'a duris juwap berdin'is!`);
+        moment.locale('uz-latn');
+        const now = moment().format(moment.localeData().longDateFormat('LLL'));
+        await ctx.reply(`👤 Paydalaniwshi: ${user[0].fullName}\n🆔 Test IDsi: ${ctx.session.getAnswerID}\n✏️ Uliwma sorawlar sani: ${correctAnswer[0].value}\n✅ Duris juwaplar sani: ${result.result}\n🕐${now}`);
         await ctx.scene.leave();
     } catch (e) {
         await ctx.reply(`Qa'telik boldi. A'meldi basinan baslan'`);
