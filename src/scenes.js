@@ -137,7 +137,7 @@ verify.enter(async (ctx) => {
         const result = words.checkAnswers(answer, correctAnswer[0].correctAnswers);
         const resultTest = new models.Result({
             resultBall: result.result,
-            answerUsers: result.array.toString(),
+            answerUsers: result.array.join(', '),
             test_Id: correctAnswer[0]._id,
             userId: user[0]._id
         });
