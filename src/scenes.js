@@ -41,7 +41,7 @@ answerText.on('text', async (ctx) => {
     try {
         const answer = ctx.message.text.split('/');
         const n = parseInt(answer[0].trim())
-        const answers = words.addSpice(answer[1]);
+        const answers = words.addSpace(answer[1]);
         if (answer.length > 1) {
             if (n === answers.split(/\s/g).length) {
                 ctx.session.testId = words.randomID();

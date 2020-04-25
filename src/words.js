@@ -19,7 +19,7 @@ function randomID() {
 function checkAnswers(answer, correctAnswer) {
     let result = 0;
     let cAnswer = correctAnswer;
-    let aAnswer = addSpice(answer.trim());
+    let aAnswer = addSpace(answer.trim());
     let i = 1;
     let array = [];
     while (answer.search(i.toString()) + 1) {
@@ -28,15 +28,15 @@ function checkAnswers(answer, correctAnswer) {
             result += 1;
             array.push(i.toString().concat(' ', `duris`));
         } else {
-            array.push(i.toString().concat(' ', `qa'te`));
+            array.push(i.toString().concat(' ', `juwabi: "`, `${cAnswer[cAnswer.search(i.toString()) + i.toString().length]}`, '"'));
         }
         i += 1;
     }
     return {result, array}
 }
 
-function addSpice(text) {
-    juwap = text.replace(/(\r\n|\n|\r|\s)/gm, '')
+function addSpace(text) {
+    juwap = text.replace(/(\r\n|\n|\r|\s)/gm, '').toLowerCase()
     let i = 1;
     while (juwap.search(i.toString()) + 1) {
         juwap = juwap.splice(juwap.search(i.toString()) + i.toString().length + 1, 0, ' ');
@@ -55,6 +55,6 @@ module.exports = {
     getResult,
     randomID,
     checkAnswers,
-    addSpice,
+    addSpace,
     sendResultID
 };
