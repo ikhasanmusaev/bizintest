@@ -1,11 +1,11 @@
-const start = `Salam men BOT\n. Isleyjaq bolg'an testin'izdin' ID sin mag'an jiberin'. Onin' ushin 'Juwaplardi jiberiw' knopkasin basin'.\n Eger test qosiwdi qalesen'iz @ikhasanmusaev'qa qabarlasin'.`;
-const filePDF = `Testin'izdi .pdf ko'rinisinde mag'an jiberin'`;
-const answer = `Testin'izdin' juwaplarin N/1a2b3c...Nd formatinda jiberin'.\n (N - sorawlar sani.)`;
-const sentTest = `Islemekshi bolg'an testin'izdin' ID sin jiberin'`;
-const getAnswerID = `Jibermekshi bolg'an juwaplarin'istin' Testinin' ID sin jiberin'`;
-const getAnswer = `Endi juwaplarin'izdi to'mendegishe formatta jiberin'. \n \n 1a2b...30d. \nIltimas juaplardi duris belgilegenin'izdi tekserin'`;
-const getResult = `Almaqshi bolg'an natijelerin'izdin' test ID sin jiberin'`;
-const sendResultID = `Jibermekshi bolg'an na'tiyjelerin'istin' Testinin' ID sin jiberin'`;
+const start = `Salom men BOT\n. Test javoblarini jo'natish uchun 'Javoblarni jo'natish' tugmachasini bosing.`;
+const filePDF = `Testingizni .pdf ko'rinishida menga jo'nating`;
+const answer = `Testingiz javoblarini N/1a2b3c...Nd formatida menga jo'nating.\n (N - savollar soni.)`;
+const sentTest = `Test IDsini jo'nating`;
+const getAnswerID = `Avval Test IDsini jo'nating`;
+const getAnswer = `Javoblaringizni quyidagicha formatta jo'nating'. \n \n 1a2b...30d\n(Javoblar orasida bo'sh joy qoldirish yoki qoldirmaslik hech qanday ahamiyatga ega emas)`;
+const getResult = `Natijalarni olish uchun avval Test IDsini jo'nating`;
+const sendResultID = `Natijalarni jo'natish uchun avval Test IDsini jo'nating`;
 
 
 String.prototype.splice = function (idx, rem, str) {
@@ -26,9 +26,9 @@ function checkAnswers(answer, correctAnswer) {
         // if (cAnswer[i] === aAnswer[i]) result += 1;
         if (cAnswer[cAnswer.search(i.toString()) + i.toString().length] === aAnswer[aAnswer.search(i.toString()) + i.toString().length]) {
             result += 1;
-            array.push(i.toString().concat(' ', `duris`));
+            array.push(i.toString().concat(' ', `to'g'ri`));
         } else {
-            array.push(i.toString().concat(' ', `juwabi: "`, `${cAnswer[cAnswer.search(i.toString()) + i.toString().length]}`, '"'));
+            array.push(i.toString().concat(' ', `javob: "`, `${cAnswer[cAnswer.search(i.toString()) + i.toString().length]}`, '"'));
         }
         i += 1;
     }

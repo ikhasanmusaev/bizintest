@@ -18,7 +18,8 @@ const Result = mongoose.model('Result', new Schema({
     resultBall: {type:Number},
     answerUsers: {type: String},
     test_Id: {type: Schema.Types.ObjectId, ref: 'Test'},
-    userId: {type:Schema.Types.ObjectId, ref: 'Users'}
+    userId: {type:Schema.Types.ObjectId, ref: 'Users'},
+    time: {type:String}
 }));
 
 module.exports = {Users, Test, Result};
