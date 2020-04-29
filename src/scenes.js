@@ -143,7 +143,7 @@ verify.enter(async (ctx) => {
         });
         resultTest.save();
         moment.locale('uz-latn');
-        const now = moment().format(moment.localeData().longDateFormat('LLL'));
+        const now = moment().format('LLL:ss');
         await ctx.reply(`👤 Paydalaniwshi: ${user[0].fullName}\n🆔 Test IDsi: ${ctx.session.getAnswerID}\n✏️ Uliwma sorawlar sani: ${correctAnswer[0].value}\n✅ Duris juwaplar sani: ${result.result}\n🕐${now}`);
         await ctx.scene.leave();
     } catch (e) {
