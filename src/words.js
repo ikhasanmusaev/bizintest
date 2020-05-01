@@ -1,3 +1,7 @@
+const telegraph = require('telegraph-node');
+const ph = new telegraph();
+token = 'c0e38b3da59b03a2fb8b7fdc8bdd8c3335fb370e1b970a8543c5c4e426df';
+
 const start = `Salom men BOT\n. Test javoblarini jo'natish uchun 'Javoblarni jo'natish' tugmachasini bosing.`;
 const filePDF = `Testingizni .pdf ko'rinishida menga jo'nating`;
 const answer = `Testingiz javoblarini N/1a2b3c...Nd formatida menga jo'nating.\n (N - savollar soni.)`;
@@ -36,13 +40,19 @@ function checkAnswers(answer, correctAnswer) {
 }
 
 function addSpace(text) {
-    juwap = text.replace(/(\r\n|\n|\r|\s)/gm, '').toLowerCase()
+    juwap = text.replace(/(\r\n|\n|\r|\s)/gm, '').toLowerCase();
     let i = 1;
     while (juwap.search(i.toString()) + 1) {
         juwap = juwap.splice(juwap.search(i.toString()) + i.toString().length + 1, 0, ' ');
         i += 1
     }
     return juwap.trim().replace(/\s\s/g, ' ')
+}
+
+async function create_telegraph(content) {
+    return await ph.createPage(token, 'Test results', [{children: [content]}], {
+        return_content: true
+    })
 }
 
 module.exports = {
@@ -56,5 +66,6 @@ module.exports = {
     randomID,
     checkAnswers,
     addSpace,
-    sendResultID
+    sendResultID,
+    create_telegraph
 };

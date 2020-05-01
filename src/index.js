@@ -60,7 +60,7 @@ bot.command('sendresult', async ctx =>{
 })
 
 bot.on('text', async (ctx) => {
-    await ctx.reply(`Siz mavjub bo'lmagan buyruqni jo'natdingiz. Iltimos, amalni qayta tekshiring!`);
+    await ctx.reply(`Siz mavjud bo'lmagan buyruqni jo'natdingiz. Iltimos, amalni qayta tekshiring!`);
     await ctx.scene.leave();
 })
 

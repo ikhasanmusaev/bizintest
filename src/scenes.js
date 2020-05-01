@@ -174,7 +174,8 @@ getResult.on('text', async (ctx) => {
             result.push(`${k}. ${j[0].fullName || ''} ${(j[0].username) ? (('@' + j[0].username || '')) : ('')} Natija: ${i.resultBall}  (${moment(i.time).format('LLL:ss')})`);
             k += 1;
         }
-        ctx.reply(result.join(';\n'));
+        const send_results = await words.create_telegraph(result.join(';\n'))
+        await ctx.reply(send_results.url);
         await ctx.scene.leave();
     } else {
         ctx.reply(`Siz xato ID jo'natdingiz yoki bunday ID mavjud emas`);
