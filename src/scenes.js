@@ -163,13 +163,16 @@ getResult.on('text', async (ctx) => {
     if (ctx.message.text[0] === '_' && test_id) {
         const results = await models.Result.find({
             test_Id: test_id[0]
-        }, 'resultBall userId').sort({resultBall: -1});
+        }, 'resultBall userId time').sort({resultBall: -1, time: 1});
         let result = [];
+        moment.locale('uz-latn');
+        let k = 1;
         for (let i of results) {
             let j = await models.Users.find({
                 _id: i.userId
             }, 'fullName username');
-            result.push(`${j[0].fullName || ''} ${(j[0].username) ? (('@' + j[0].username || '')) : ('')} Natija: ${i.resultBall}`);
+            result.push(`${k}. ${j[0].fullName || ''} ${(j[0].username) ? (('@' + j[0].username || '')) : ('')} Natija: ${i.resultBall}  (${moment(i.time).format('LLL:ss')})`);
+            k += 1;
         }
         ctx.reply(result.join(';\n'));
         await ctx.scene.leave();

@@ -19,7 +19,7 @@ const Result = mongoose.model('Result', new Schema({
     answerUsers: {type: String},
     test_Id: {type: Schema.Types.ObjectId, ref: 'Test'},
     userId: {type:Schema.Types.ObjectId, ref: 'Users'},
-    time: {type:String}
+    time: {type:Date}
 }));
 
 module.exports = {Users, Test, Result};

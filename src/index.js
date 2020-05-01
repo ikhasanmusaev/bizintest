@@ -12,7 +12,7 @@ scenes = require('./scenes');
 
 const stage = new Stage();
 stage.command('cancel', ctx => {
-    ctx.reply(`Siz shig'iwdi bastin'is, a'meldi basinan baslan'!`);
+    ctx.reply(`Siz chiqish buyrug'ini jo'natdingiz, amalni boshidan boshlang!`);
     ctx.scene.leave();
 });
 
@@ -32,7 +32,7 @@ bot.use(stage.middleware());
 bot.start(async (ctx) => {
     const message = ctx.message;
     await ctx.telegram.sendMessage(message.chat.id, words.start);
-    await ctx.reply(`Juwaplardi jiberiw di basin'`, Markup.keyboard(['Juwaplardi jiberiw']).oneTime().resize().extra())
+    await ctx.reply(`'Javoblarni jo'natish'ni bosing`, Markup.keyboard(['Javoblarni jo\'natish']).oneTime().resize().extra())
 });
 //
 bot.command('iamadmin', async (ctx) => {
@@ -47,7 +47,7 @@ bot.command('test', (async (ctx) => {
     await ctx.scene.enter('sendTest')
 }));
 
-bot.hears('Juwaplardi jiberiw', async (ctx) => {
+bot.hears('Javoblarni jo\'natish', async (ctx) => {
     await ctx.scene.enter('getAnswerID')
 });
 
@@ -60,7 +60,7 @@ bot.command('sendresult', async ctx =>{
 })
 
 bot.on('text', async (ctx) => {
-    await ctx.reply(`Siz joq bolg'an buyriqti bajerdin'iz. Iltimas, a'meldi qayta teksirin'`);
+    await ctx.reply(`Siz mavjub bo'lmagan buyruqni jo'natdingiz. Iltimos, amalni qayta tekshiring!`);
     await ctx.scene.leave();
 })
 
