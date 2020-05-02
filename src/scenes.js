@@ -212,7 +212,7 @@ sendResults.on('text', async (ctx) => {
             }, 'resultBall answerUsers');
             if (await result.length > 0) {
                 await ctx.telegram.sendMessage(i.user_id, `Siz ${result[0].resultBall.toString()} savolga to'g'ri javob berdingiz. Test javoblari natijasi quyidagicha: `);
-                await ctx.telegram.sendMessage(i.user_id, `${result[0].answerUsers}`);
+                await ctx.telegram.sendMessage(i.user_id, `${result[0].answerUsers}`|| 0);
             }
         }
         await ctx.scene.leave()
