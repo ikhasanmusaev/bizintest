@@ -30,9 +30,17 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
-    const message = ctx.message;
-    await ctx.telegram.sendMessage(message.chat.id, words.start);
-    await ctx.reply(`'Javoblarni jo'natish'ni bosing`, Markup.keyboard(['Javoblarni jo\'natish']).oneTime().resize().extra())
+    try {
+        const message = ctx.message;
+        await ctx.telegram.sendMessage(message.chat.id, words.start);
+        await ctx.reply(`'Javoblarni jo'natish'ni bosing`, Markup.keyboard(['Javoblarni jo\'natish']).oneTime().resize().extra())
+    } catch (error) {
+        if (error.response && error.response.statusCode === 403) {
+            console.log(error);
+        } else {
+            console.log(error);
+        }
+    }
 });
 //
 bot.command('iamadmin', async (ctx) => {
@@ -55,7 +63,7 @@ bot.command('result', async (ctx) => {
     await ctx.scene.enter('getResult')
 });
 
-bot.command('sendresult', async ctx =>{
+bot.command('sendresult', async ctx => {
     await ctx.scene.enter('sendResultID')
 })
 
