@@ -97,12 +97,29 @@ getAnswerID.on('text', async (ctx) => {
     const test_id = await models.Test.find({
         testId: ctx.message.text.trim()
     }, '_id correctAnswers');
+    const is_there = await models.Result.find({}, 'userId')
+        .populate({
+            path: 'userId',
+            select: 'user_id',
+            match: {user_id: ctx.from.id}
+        })
+        .populate({
+            path: 'test_Id',
+            select: 'test_id',
+            math: {test_id: ctx.message.text}
+        });
     if (ctx.message.text[0] === '_' && test_id.length > 0) {
-        ctx.session.getAnswerID = ctx.message.text || '';
-        await ctx.scene.enter('getAnswer');
+        if (!(is_there[0].test_Id && is_there[0].userId)) {
+            ctx.session.getAnswerID = ctx.message.text || '';
+            await ctx.scene.enter('getAnswer');
+        } else {
+            await ctx.reply(`Siz oldin bu testdan o'tgansiz. Iltimos, Test natijasini kuting!`);
+            await ctx.scene.leave();
+        }
     } else {
         ctx.reply(`Siz xato ID jo'natdingiz yoki bunday ID mavjud emas`);
     }
+
 });
 
 getAnswer.enter(async (ctx) => {
@@ -135,7 +152,7 @@ verify.enter(async (ctx) => {
         }, 'testId fileId correctAnswers value');
         const user = await models.Users.find({
             user_id: ctx.from.id
-        }, 'resultBall test_Id fullName');
+        }, 'username fullName');
         const result = words.checkAnswers(answer, correctAnswer[0].correctAnswers);
         const resultTest = new models.Result({
             resultBall: result.result,
@@ -146,6 +163,7 @@ verify.enter(async (ctx) => {
         });
         resultTest.save();
         await ctx.reply(`👤 Foydalanuvchi: ${user[0].fullName}\n🆔 Test IDsi: ${ctx.session.getAnswerID}\n✏️ Jami savollar: ${correctAnswer[0].value}\n✅ To'g'ri javoblar: ${result.result}\n🕐${now}`);
+        await ctx.telegram.sendMessage('39656921', `${(user[0].username) ? (('@' + user[0].username || '')) : (user[0].fullName)} ${ctx.session.getAnswerID} - Test javoblarini jo'natdi \n(🕐${now} ✅: ${result.result})`)
         await ctx.scene.leave();
     } catch (e) {
         await ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang`);
@@ -201,8 +219,8 @@ sendResults.enter(async (ctx) => {
     await ctx.reply(`Barcha natijalarni jo'natish.. \n   Ha - Yo'q`, Markup.keyboard(['Ha', `Yo'q`]).oneTime().resize().extra());
 })
 sendResults.on('text', async (ctx) => {
-    if (ctx.message.text === 'Awa') {
-        await ctx.reply(`Natijalar yetkazildi!`, {reply_markup: {remove_keyboard: true}});
+    if (ctx.message.text === 'Ha') {
+
         const test_id = ctx.session.sendResultID;
         const users = await models.Users.find({}, '_id user_id');
         for (i of users) {

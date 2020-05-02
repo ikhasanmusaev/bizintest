@@ -26,7 +26,7 @@ function checkAnswers(answer, correctAnswer) {
     let aAnswer = addSpace(answer.trim());
     let i = 1;
     let array = [];
-    while (answer.search(i.toString()) + 1) {
+    while (correctAnswer.search(i.toString()) + 1) {
         // if (cAnswer[i] === aAnswer[i]) result += 1;
         if (cAnswer[cAnswer.search(i.toString()) + i.toString().length] === aAnswer[aAnswer.search(i.toString()) + i.toString().length]) {
             result += 1;

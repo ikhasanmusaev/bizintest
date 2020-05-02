@@ -18,7 +18,7 @@ const Result = mongoose.model('Result', new Schema({
     resultBall: {type:Number},
     answerUsers: {type: String},
     test_Id: {type: Schema.Types.ObjectId, ref: 'Test'},
-    userId: {type:Schema.Types.ObjectId, ref: 'Users'},
+    userId: {type:Schema.Types.ObjectId, ref: 'users'},
     time: {type:Date}
 }));
 
