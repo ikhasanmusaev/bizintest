@@ -48,7 +48,7 @@ bot.command('iamadmin', async (ctx) => {
 });
 
 bot.command('addtest', async (ctx) => {
-    await ctx.scene.enter('answerText').then()
+    await ctx.scene.enter('answerText')
 })
 
 bot.command('test', (async (ctx) => {
@@ -56,7 +56,15 @@ bot.command('test', (async (ctx) => {
 }));
 
 bot.hears('Javoblarni jo\'natish', async (ctx) => {
-    await ctx.scene.enter('getAnswerID')
+    try {
+        await ctx.scene.enter('getAnswerID')
+    } catch (error) {
+        if (error.response && error.response.statusCode === 403) {
+            console.log(error);
+        } else {
+            console.log(error);
+        }
+    }
 });
 
 bot.command('result', async (ctx) => {
@@ -68,8 +76,16 @@ bot.command('sendresult', async ctx => {
 })
 
 bot.on('text', async (ctx) => {
-    await ctx.reply(`Siz mavjud bo'lmagan buyruqni jo'natdingiz. Iltimos, amalni qayta tekshiring!`);
-    await ctx.scene.leave();
+    try {
+        await ctx.reply(`Siz mavjud bo'lmagan buyruqni jo'natdingiz. Iltimos, amalni qayta tekshiring!`);
+        await ctx.scene.leave();
+    } catch (error) {
+        if (error.response && error.response.statusCode === 403) {
+            console.log(error);
+        } else {
+            console.log(error);
+        }
+    }
 })
 
 
