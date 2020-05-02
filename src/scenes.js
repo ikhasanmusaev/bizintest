@@ -211,10 +211,15 @@ sendResults.on('text', async (ctx) => {
                 userId: i._id
             }, 'resultBall answerUsers');
             if (await result.length > 0) {
-                await ctx.telegram.sendMessage(i.user_id, `Siz ${result[0].resultBall.toString()} savolga to'g'ri javob berdingiz. Test javoblari natijasi quyidagicha: `);
-                await ctx.telegram.sendMessage(i.user_id, `${result[0].answerUsers}`|| 0);
+                ctx.telegram.sendMessage(i.user_id, `Siz ${result[0].resultBall.toString()} savolga to'g'ri javob berdingiz. Test javoblari natijasi quyidagicha: \n\n${result[0].answerUsers}`).then(function (resp) {
+                }).catch(function (error) {
+                    if (error.response && error.response.statusCode === 403) {
+                        console.log(error);
+                    }
+                });
             }
         }
+        await ctx.reply(`Natijalar yetkazildi!`, {reply_markup: {remove_keyboard: true}});
         await ctx.scene.leave()
     } else {
         await ctx.reply(`Natijalarni yetkazish bekor qilindi!`, {reply_markup: {remove_keyboard: true}});
