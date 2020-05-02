@@ -30,9 +30,9 @@ function checkAnswers(answer, correctAnswer) {
         // if (cAnswer[i] === aAnswer[i]) result += 1;
         if (cAnswer[cAnswer.search(i.toString()) + i.toString().length] === aAnswer[aAnswer.search(i.toString()) + i.toString().length]) {
             result += 1;
-            array.push(i.toString().concat(' ', `to'g'ri`));
+            array.push('\n'.concat(i.toString(), ` to'g'ri`));
         } else {
-            array.push(i.toString().concat(' ', `javob: "`, `${cAnswer[cAnswer.search(i.toString()) + i.toString().length]}`, '"'));
+            array.push('\n'.concat(i.toString(), ` javob: "`, `${cAnswer[cAnswer.search(i.toString()) + i.toString().length]}`, '"'));
         }
         i += 1;
     }

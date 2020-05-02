@@ -85,7 +85,7 @@ sendTest.on('text', async (ctx) => {
             ctx.reply(`Siz xato ID jo'natdingiz yoki bunday ID mavjud emas!`)
         }
     } catch (e) {
-        ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang'`);
+        ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang`);
         await ctx.scene.leave();
     }
 });
@@ -94,32 +94,46 @@ getAnswerID.enter(async (ctx) => {
     await ctx.reply(words.getAnswerID);
 });
 getAnswerID.on('text', async (ctx) => {
-    const test_id = await models.Test.find({
-        testId: ctx.message.text.trim()
-    }, '_id correctAnswers');
-    const is_there = await models.Result.find({}, 'userId')
-        .populate({
-            path: 'userId',
-            select: 'user_id',
-            match: {user_id: ctx.from.id}
-        })
-        .populate({
-            path: 'test_Id',
-            select: 'test_id',
-            math: {test_id: ctx.message.text}
-        });
-    if (ctx.message.text[0] === '_' && test_id.length > 0) {
-        if (!(is_there[0].test_Id && is_there[0].userId)) {
-            ctx.session.getAnswerID = ctx.message.text || '';
-            await ctx.scene.enter('getAnswer');
+    try {
+        const test_id = await models.Test.find({
+            testId: ctx.message.text.trim()
+        }, '_id correctAnswers');
+        const is_there = await models.Result.find({}, 'userId')
+            .populate({
+                path: 'test_Id',
+                select: 'test_id',
+                math: {test_id: ctx.message.text}
+            })
+            .populate({
+                path: 'userId',
+                select: 'user_id',
+                match: {user_id: ctx.from.id}
+            });
+        if (ctx.message.text[0] === '_' && test_id.length > 0) {
+            try {
+                if (!(is_there[0].test_Id && is_there[0].userId)) {
+                    ctx.session.getAnswerID = ctx.message.text || '';
+                    await ctx.scene.enter('getAnswer');
+                } else {
+                    await ctx.reply(`Siz oldin bu testdan o'tgansiz. Iltimos, Test natijasini kuting!`);
+                    await ctx.scene.leave();
+                }
+            } catch (e) {
+                if (e instanceof TypeError || is_there[0] === undefined) {
+                    ctx.session.getAnswerID = ctx.message.text || '';
+                    await ctx.scene.enter('getAnswer');
+                } else {
+                    console.log(e)
+                }
+            }
         } else {
-            await ctx.reply(`Siz oldin bu testdan o'tgansiz. Iltimos, Test natijasini kuting!`);
-            await ctx.scene.leave();
+            ctx.reply(`Siz xato ID jo'natdingiz yoki bunday ID mavjud emas`);
         }
-    } else {
-        ctx.reply(`Siz xato ID jo'natdingiz yoki bunday ID mavjud emas`);
+    } catch (e) {
+        ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang`);
+        console.log(e);
+        await ctx.scene.leave();
     }
-
 });
 
 getAnswer.enter(async (ctx) => {
@@ -136,7 +150,7 @@ getAnswer.on('text', async (ctx) => {
         user.save();
         await ctx.scene.enter('verify')
     } catch (e) {
-        ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang'`);
+        ctx.reply(`Xatolik kuzatildi. Iltimos, amalni boshidan boshlang`);
         await ctx.scene.leave();
     }
 });
